@@ -5,7 +5,7 @@
 
   <div>
     <p>Emitting last Clicked to Parent</p>
-    <button @click="$emit('lastClick' ,{counter : counter++,  time: (new Date().toTimeString())})">Click Here {{ counter }} </button>
+    <button @click="$emit('lastClick' ,{counter : counter++,  clickedAt: (new Date().toTimeString())})">Click Here {{ counter }} </button>
   </div>
   
 </template>

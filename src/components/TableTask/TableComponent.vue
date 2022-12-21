@@ -9,6 +9,14 @@
         @input="setSearchStr"
       />
     </div>
+    <div>
+      <label for="list-per-page">List Per Page</label>
+      <select @input="updatePageLimit" v-model="pageLimitSize" id="list-per-page">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="5">5</option>
+      </select>
+    </div>
     <table>
       <tr>
         <slot name="table-head"></slot>
@@ -28,7 +36,7 @@
     </table>
     <template v-if="totalPages > 1">
       <template v-for="i in totalPages" :key="i">
-        <button v-on="{ click: () => pageChange(i) }">{{ i }}</button>
+        <button style="margin: 10px ;" v-on="{ click: () => pageChange(i) }">{{ i }}</button>
       </template>
     </template>
   </div>
@@ -46,7 +54,7 @@ export default {
     const usersArr = ref([]);
     // eslint-disable-next-line no-debugger
     // debugger;
-    window.$store = $store;
+    const pageLimitSize = ref($store.state.paginationLimit);
     onMounted(async () => {
       await $store.dispatch("usersFetch");
       //  console.log()
@@ -66,7 +74,13 @@ export default {
       $store.commit("updateSearchText", event.target.value);
       $store.commit("updateCurrentPage", 1);
     }, 500);
-    return { usersArr, pageChange, totalPages, usersForThisPage, setSearchStr };
+    const updatePageLimit = function(evt){
+      // eslint-disable-next-line no-debugger
+      debugger;
+      $store.commit( 'updateCurrentPage' , 1)
+      $store.commit( 'updatePaginationLimit' , parseInt(evt.target.value))
+    }
+    return { usersArr, pageChange, totalPages, usersForThisPage, setSearchStr , pageLimitSize , updatePageLimit};
   },
 };
 </script>
